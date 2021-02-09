@@ -1,3 +1,8 @@
+---
+layout: index
+title: Victor B.
+---
+
 # Victor B.
 A 15 years old software developer
 
