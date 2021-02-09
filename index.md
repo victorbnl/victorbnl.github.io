@@ -1,11 +1,9 @@
 ---
-layout: index
-title: Victor B.
+# Feel free to add content and custom Front Matter to this file.
+# To modify the layout, see https://jekyllrb.com/docs/themes/#overriding-theme-defaults
+
+layout: home
 ---
 
-# Victor B.
-A 15 years old software developer
 
-## Hey there!
-
-Welcome on my site! It's currently building, but when it will be finished there will be the sites of my projects and a blog with some tutorials!
+Salut
