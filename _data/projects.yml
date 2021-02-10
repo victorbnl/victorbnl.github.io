@@ -1,11 +1,11 @@
 - name: Android IP Scanner
   description: a bare-bone android IP scanner
-  link: /android-ip-scanner
+  link: /projects/android-ip-scanner
 
 - name: Build signed APK
   description: a GitHub action to build & sign Android apps
-  link: https://github.com/victorbnl/build-signed-apk
+  link: /projects/build-signed-apk
 
 - name: АЗЕРТЫ
   description: a russian phonetic layout for AZERTY keyboards
-  link: https://github.com/victorbnl/russian-azerty
+  link: /projects/russian-azerty

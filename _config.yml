@@ -22,9 +22,14 @@ github_username:  victorbnl
 
 permalink: "/:title"
 
+collections_dir: collections
+
 collections:
   posts:
     permalink: "/blog/:title"
+  projects:
+    permalink: "/projects/:title"
+    output: true
 
 # Build settings
 markdown: kramdown

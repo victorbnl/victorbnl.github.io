@@ -2,9 +2,25 @@
 ---
 
 {% assign colors = site.data.colors %}
-
+    
 *
     box-sizing: border-box
+    --accent: {{ colors["accent"] }}
+    --accent-alt: {{ colors["accent_alt"] }}
+
+header
+    align-self: stretch
+    display: flex
+    flex-direction: row
+    background: linear-gradient(to right, var(--accent), var(--accent-alt))
+    font-size: 1.3em
+    a
+        color: white
+        padding: 0.8em
+    a:hover
+        background-color: rgba(255, 255, 255, 0.3)
+    .header-separator
+        flex-grow: 2
 
 body
     display: flex
@@ -20,10 +36,10 @@ h3,
 h4,
 h5,
 h6
-    color: {{ colors["accent"] }}
+    color: var(--accent)
 
 a
-    color: {{ colors["accent"] }}
+    color: var(--accent)
     text-decoration: none
 
 img.icon
