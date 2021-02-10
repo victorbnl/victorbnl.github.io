@@ -13,6 +13,19 @@
         {% endfor %}
     </div>
     <div class="mobile-header">
-        <a href="#hamburger"><img src="/assets/header_icons/menu.svg"></a>
+        <input type="checkbox" id="drawer-button">
+        <label for="drawer-button" id="drawer-button-label"><img src="/assets/header_icons/menu.svg"></label>
+        <div id="drawer">
+            {% for link in site.data.header["left"] %}
+                <a href="{{ link.url }}">
+                    <span>{{ link.text }}</span>
+                </a>
+            {% endfor %}
+            {% for link in site.data.header["right"] %}
+                <a href="{{ link.url }}">
+                    <span>{{ link.text }}</span>
+                </a>
+            {% endfor %}
+        </div>
     </div>
 </header>

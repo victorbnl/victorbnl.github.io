@@ -1,5 +1,6 @@
 accent: "#ff2626"
 accent_alt: "#ff8826"
+drawer_background: "#2e2e2e"
 footer_background: "#2e2e2e"
 footer_foreground: white
 section_projects_background: "#3d3d3d"

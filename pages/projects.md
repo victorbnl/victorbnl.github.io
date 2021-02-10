@@ -1,6 +1,7 @@
 ---
 layout: article
 title: Projects
+permalink: /projects
 ---
 
 # My projects

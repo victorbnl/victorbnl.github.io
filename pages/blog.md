@@ -1,6 +1,7 @@
 ---
 layout: article
 title: Blog
+permalink: /blog
 ---
 
 <link rel="stylesheet" href="/css/blog.css">
