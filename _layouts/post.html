@@ -2,10 +2,14 @@
 layout: article
 ---
 
-<link rel="stylesheet" href="/css/post.css">
-
 <div id="post-infos">
-    <h1>{{ page.title }}</h1>
-    <span>{{ page.author }} • {{ page.date | date_to_long_string  }}</span>
+    <h1 class="post-title">{{ page.title }}</h1>
+    <span class="grey">{{ page.author }} • {{ page.date | date_to_long_string  }}</span>
 </div>
 {{ content }}
+
+<style>
+    .post-title {
+        margin-bottom: 0.3em
+    }
+</style>

@@ -4,8 +4,6 @@ title: Blog
 permalink: /blog
 ---
 
-<link rel="stylesheet" href="/css/blog.css">
-
 # My blog
 
 Hey! Did you know I have a blog? Here are my posts:
@@ -18,3 +16,10 @@ Hey! Did you know I have a blog? Here are my posts:
         </li>
     {% endfor %}
 </ul>
+
+<style>
+    #posts-list li p {
+        margin-top: 0.4em;
+        color: #4a4a4a;
+    }
+</style>

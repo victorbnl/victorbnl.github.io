@@ -1,0 +1,27 @@
+---
+---
+    
+/**
+ * This file contains all the options for the drawer (hamburger menu) for mobile devices
+ */
+
+{% assign colors = site.data.colors %}
+    
+#drawer
+    position: fixed
+    left: -80vw
+    top: 0
+    width: 80vw
+    bottom: 0
+
+#drawer-button
+    display: none
+
+#drawer-button-label
+    z-index: 1
+
+#drawer-button:checked ~ #drawer
+    transform: translateX(80vw)
+
+#drawer-button:checked ~ #drawer-button-label
+    background-image: url("/assets/header_icons/close.svg")

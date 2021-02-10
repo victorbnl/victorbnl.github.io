@@ -1,0 +1,19 @@
+---
+---
+
+@media (min-width: 25em)
+    header
+        .desktop-header
+            display: flex
+            flex-direction: row
+            .header-separator
+                flex-grow: 2
+        .mobile-header
+            display: none
+
+@media ( max-width: 25em)
+    header
+        .desktop-header
+            display: none
+        .mobile-header
+            display: flex
