@@ -1,0 +1,17 @@
+---
+layout: article
+---
+
+{{ content }}
+
+<h1>Comments</h1>
+
+<ul id="comments-list">
+    <li class="comment"><a href="https://github.com/victorbnl/victorbnl.github.io/issues/new?labels=comments&title=Comment%20on%20{{ page.id | url_encode }}">New comment </a></li>
+</ul>
+
+<script src="/js/loadComments.js"></script>
+
+<script>
+    loadComments();
+</script>

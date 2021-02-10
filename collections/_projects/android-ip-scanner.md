@@ -1,5 +1,5 @@
 ---
-layout: article
+layout: article-with-comments
 title: Android IP Scanner
 ---
 
