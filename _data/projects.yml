@@ -1,6 +1,6 @@
 - name: Android IP Scanner
   description: a bare-bone android IP scanner
-  link: https://github.com/victorbnl/android-ip-scanner
+  link: /android-ip-scanner
 
 - name: Build signed APK
   description: a GitHub action to build & sign Android apps
