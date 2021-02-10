@@ -1,9 +1,18 @@
 <header>
-    {% for link in site.data.header["left"] %}
-        <a href="{{ link.url }}">{{ link.text }}</a>
-    {% endfor %}
-    <span class="header-separator"></span>
-    {% for link in site.data.header["right"] %}
-        <a href="{{ link.url }}">{{ link.text }}</a>
-    {% endfor %}
+    <div class="desktop-header">
+        {% for link in site.data.header["left"] %}
+            <a href="{{ link.url }}">
+                <span>{{ link.text }}</span>
+            </a>
+        {% endfor %}
+        <span class="header-separator"></span>
+        {% for link in site.data.header["right"] %}
+            <a href="{{ link.url }}">
+                <span>{{ link.text }}</span>
+            </a>
+        {% endfor %}
+    </div>
+    <div class="mobile-header">
+        <a href="#hamburger"><img src="/assets/header_icons/menu.svg"></a>
+    </div>
 </header>

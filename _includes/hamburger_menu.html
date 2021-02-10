@@ -1,0 +1,13 @@
+<div id="hamburger">
+    <a href="#" id="close"><img src="/assets/header_icons/close.svg"></a>
+    {% for link in site.data.header["left"] %}
+        <a href="{{ link.url }}">
+            <span>{{ link.text }}</span>
+        </a>
+    {% endfor %}
+    {% for link in site.data.header["right"] %}
+        <a href="{{ link.url }}">
+            <span>{{ link.text }}</span>
+        </a>
+    {% endfor %}
+</div>

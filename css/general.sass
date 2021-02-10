@@ -2,7 +2,7 @@
 ---
 
 {% assign colors = site.data.colors %}
-    
+
 *
     box-sizing: border-box
     --accent: {{ colors["accent"] }}
@@ -10,17 +10,59 @@
 
 header
     align-self: stretch
-    display: flex
-    flex-direction: row
     background: linear-gradient(to right, var(--accent), var(--accent-alt))
     font-size: 1.3em
+    color: white
     a
-        color: white
         padding: 0.8em
+        color: inherit
     a:hover
         background-color: rgba(255, 255, 255, 0.3)
-    .header-separator
-        flex-grow: 2
+
+@media (min-width: 25em)
+    header
+        .desktop-header
+            display: flex
+            flex-direction: row
+            .header-separator
+                flex-grow: 2
+        .mobile-header
+            display: none
+
+@media ( max-width: 25em)
+    header
+        .desktop-header
+            display: none
+        .mobile-header
+            display: flex
+    
+#hamburger:target
+    display: flex
+    flex-direction: column
+    align-items: center
+    justify-content: center
+    position: fixed
+    left: 0
+    top: 0
+    right: 0
+    bottom: 0
+    background: linear-gradient(to right, var(--accent), var(--accent-alt))
+    color: white
+    a
+        color: inherit
+        margin-bottom: 0.5em
+        font-size: 1.5em
+    a#close
+        position: fixed
+        top: 0
+        left: 0
+        padding: 0.8em
+        font-size: 1.3em
+    a#close:hover
+        background-color: rgba(255, 255, 255, 0.3)
+
+#hamburger:not(:target)
+    display: none
 
 body
     display: flex
