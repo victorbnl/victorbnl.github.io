@@ -1,0 +1,19 @@
+---
+---
+
+{% assign colors = site.data.colors %}
+
+footer
+    padding: 1em
+    background: {{ colors["footer_background"] }}
+    align-self: stretch
+    display: flex
+    justify-content: center
+    color: {{ colors["footer_foreground"] }}
+    section
+        margin: 0 1%
+    h1,
+    a,
+    ::marker
+        color: inherit
+    

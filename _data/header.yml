@@ -1,0 +1,15 @@
+left:
+
+  - text: "Victor B."
+    url: "/"
+
+right:
+  
+  - text: "Projects"
+    url: "/projects"
+  
+  - text: "Blog"
+    url: "/blog"
+
+  - text: "About"
+    url: "/about"

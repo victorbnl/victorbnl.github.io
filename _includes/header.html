@@ -1,0 +1,9 @@
+<header>
+    {% for link in site.data.header["left"] %}
+        <a href="{{ link.url }}">{{ link.text }}</a>
+    {% endfor %}
+    <span class="header-separator"></span>
+    {% for link in site.data.header["right"] %}
+        <a href="{{ link.url }}">{{ link.text }}</a>
+    {% endfor %}
+</header>

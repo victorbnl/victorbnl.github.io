@@ -1,0 +1,50 @@
+---
+---
+
+{% assign colors = site.data.colors %}
+
+*
+    box-sizing: border-box
+
+body
+    display: flex
+    flex-direction: column
+    font-family: sans-serif
+    min-height: 100vh
+    main
+        flex-grow: 1
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6
+    color: {{ colors["accent"] }}
+
+a
+    color: {{ colors["accent"] }}
+    text-decoration: none
+
+img.icon
+    height: 1em
+
+div.highlighter-rouge
+    background-color: #383838
+    border-radius: 5px
+    padding: 1em
+
+pre.highlight
+    overflow: auto hidden
+    margin: 0
+    code
+        margin: 0
+        width: 100%
+        overflow: auto
+
+code
+    padding: 0.1em 0.3em
+    background-color: #383838
+    color: white
+    border-radius: 5px
+    font-family: "Consolas", "Source Code Pro", "Hack", sans-serif

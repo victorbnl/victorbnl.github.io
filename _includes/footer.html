@@ -1,0 +1,14 @@
+<footer>
+    {% for section in site.data.footer %}
+        <section>
+            <h1>{{ section.name }}</h1>
+            <ul>
+                {% for link in section.links %}
+                    <li>
+                        <a href="{{ link.url }}">{{ link.text}}</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </section>
+    {% endfor %}
+</footer>

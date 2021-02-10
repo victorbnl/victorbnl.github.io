@@ -1,0 +1,14 @@
+- name: "About me"
+  links:
+
+  - text: "About me"
+    url: "/about"
+
+  - text: "Contact me"
+    url: "/contact"
+
+- name: "Where to find me"
+  links:
+
+  - text: "GitHub"
+    url: "https://github.com/victorbnl"
