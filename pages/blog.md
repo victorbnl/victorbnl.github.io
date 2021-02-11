@@ -20,6 +20,6 @@ Hey! Did you know I have a blog? Here are my posts:
 <style>
     #posts-list li p {
         margin-top: 0.4em;
-        color: #4a4a4a;
+        color: var(--font-grey-color);
     }
 </style>
