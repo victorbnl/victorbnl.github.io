@@ -1,10 +1,7 @@
-let darkMode = -1
+let darkMode = 0
 
 function toggleDarkMode() {
-    if (darkMode == -1) {
-        darkMode = 0;
-        applyColors(darkMode);
-    } else if (darkMode == 0) {
+    if (darkMode == 0) {
         darkMode = 1;
         applyColors(darkMode);
     } else if (darkMode == 1) {

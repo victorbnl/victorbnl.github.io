@@ -1,10 +1,25 @@
 ---
 ---
 
-{% assign colors = site.data.colors %}
+{% assign accent_color = site.accent_color %}
+{% assign accent_alt_color = site.accent_alt_color %}
 
-\:root
-    --accent: {{ colors["accent"] }}
-    --accent-alt: {{ colors["accent_alt"] }}
-    --foreground: white
-    --background: black
+header
+    --background-color-one: {{ accent_color }}
+    --background-color-two: {{ accent_alt_color }}
+    --foreground-color: white
+    --link-hover-background: rgba(255, 255, 255, 0.2)
+
+main
+    --font-color: black
+    --background-color: white
+    --titles-color: {{ accent_color }}
+    --links-color: {{ accent_color }}
+
+footer
+    --background-color: #1a1a1a
+    --font-color: white
+
+#dark-mode-checkbox:checked ~ main
+    --font-color: white
+    --background-color: #2e2e2e

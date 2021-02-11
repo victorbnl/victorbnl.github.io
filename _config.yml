@@ -19,6 +19,8 @@ description: A 15 years old software developer
 baseurl: "/" # the subpath of your site, e.g. /blog
 url: "https://victorbnl.github.io/" # the base hostname & protocol for your site, e.g. http://example.com
 github_username:  victorbnl
+accent_color: "#ff2626"
+accent_alt_color: "#ff8826"
 
 permalink: "/:title"
 

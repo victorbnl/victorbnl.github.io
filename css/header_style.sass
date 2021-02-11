@@ -8,16 +8,19 @@
 {% assign colors = site.data.colors %}
 
 header
-    align-self: stretch
-    background: linear-gradient(to right, var(--accent), var(--accent-alt))
+    background: linear-gradient(to right, var(--background-color-one), var(--background-color-two))
     font-size: 1.3em
-    color: white
+    color: var(--foreground-color)
     a
         padding: 0.8em
         color: inherit
-    button
-        border: none
-        outline: none
-        background: inherit
-        color: white
+    label
+        padding: 0.5em
         cursor: pointer
+    a, label
+        img
+            height: 1.5em
+    a:hover, label:hover
+        background: var(--link-hover-background)
+    /*#dark-mode-checkbox
+        display: none*/
