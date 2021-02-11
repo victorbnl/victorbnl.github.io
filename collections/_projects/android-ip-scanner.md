@@ -4,9 +4,14 @@ title: Android IP Scanner
 ---
 
 <style>
-    * {
-        --accent: #0352fc;
-        --accent-alt: #1cb7ff;
+    main {
+        --titles-color: #0352fc;
+        --links-color: #0352fc;
+    }
+
+    header {
+        --background-color-one: #0352fc;
+        --background-color-two: #1cb7ff;
     }
 </style>
 
