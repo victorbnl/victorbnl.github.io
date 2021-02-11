@@ -3,32 +3,29 @@
 
 {% assign colors = site.data.colors %}
 
-*
-    --accent: {{ colors["accent"] }}
-    --accent-alt: {{ colors["accent_alt"] }}
-    
 body
     display: flex
     flex-direction: column
     font-family: sans-serif
     min-height: 100vh
+    overflow-x: hidden
+    color: var(--foreground)
+    background: var(--background)
     main
         flex-grow: 1
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6
+h1, h2, h3, h4, h5, h6,
+a
     color: var(--accent)
 
 a
-    color: var(--accent)
     text-decoration: none
 
 img.icon
     height: 1em
+
+.grey
+    color: grey
 
 div.highlighter-rouge
     background-color: #383838
@@ -52,6 +49,3 @@ code
     color: white
     
     font-family: "Consolas", "Source Code Pro", "Hack", sans-serif
-
-.grey
-    color: grey

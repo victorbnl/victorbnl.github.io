@@ -1,0 +1,48 @@
+---
+---
+
+main,
+footer,
+header
+    animation-duration: 1s
+    animation-timing-function: ease-in-out
+    animation-delay: 0
+    animation-iteration-count: 1
+
+main
+    animation-name: movemain
+
+footer
+    animation-name: movefooter
+
+header
+    animation-name: moveheader
+    a, button
+        transition-property: background-size
+        transition-duration: 0.5s
+        background: url("/assets/header_icons/button_background.svg")
+        background-size: 1em
+        background-repeat: no-repeat
+        background-position: center
+        background-clip: padding-box
+        background-size: 0
+    a:hover, button:hover
+        background-size: 150px
+
+@keyframes moveheader
+    0%
+        transform: translateY(-4em)
+    100%
+        transform: translateY(0)
+
+@keyframes movefooter
+    0%
+        transform: translateY(10em)
+    100%
+        transform: translateY(0)
+
+@keyframes movemain
+    0%
+        transform: translateX(-100vw)
+    100%
+        transform: translateX(0)
