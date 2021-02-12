@@ -17,7 +17,7 @@ title: Victor B
 email: victor.bonnelle@protonmail.com
 description: A 15 years old software developer
 baseurl: "/" # the subpath of your site, e.g. /blog
-url: "https://victorbnl.github.io/" # the base hostname & protocol for your site, e.g. http://example.com
+url: "https://victorbnl.github.io" # the base hostname & protocol for your site, e.g. http://example.com
 github_username:  victorbnl
 accent_color: "#ff2626"
 accent_alt_color: "#ff8826"
@@ -38,7 +38,7 @@ markdown: kramdown
 theme: minima
 plugins:
   - jekyll-feed
-  - jekyll-assets
+  - jekyll-sitemap
 
 sass:
   style: compressed
