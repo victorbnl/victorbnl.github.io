@@ -10,9 +10,5 @@ layout: article
     <li class="comment"><a href="https://github.com/victorbnl/victorbnl.github.io/issues/new?labels=comments&body=%3C%21--%20Do%20NOT%20change%20the%20title%20of%20the%20issue%2C%20or%20it%20will%20not%20work%20--%3E%0A%0A&title=Comment%20on%20{{ page.id | url_encode }}">New comment </a></li>
 </ul>
 
-<script src="/js/loadComments.js"></script>
+<script src="/static/js/loadComments.js"></script>
 <script src="https://unpkg.com/showdown/dist/showdown.min.js"></script>
-
-<script>
-    loadComments("{{ page.id }}");
-</script>

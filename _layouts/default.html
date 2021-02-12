@@ -1,32 +1,19 @@
+---
+layout: compress
+---
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/css/normalize.css">
-    <link rel="stylesheet" href="/css/style.css">
-    <link rel="stylesheet" href="/css/highlight.css">
-
-    <link rel="stylesheet" href="/css/colors.css">
-
-    <link rel="stylesheet" href="/css/header_style.css">
-    <link rel="stylesheet" href="/css/header_behavior.css">
-
-    <link rel="stylesheet" href="/css/drawer_style.css">
-    <link rel="stylesheet" href="/css/drawer_behavior.css">
-
-    <link rel="stylesheet" href="/css/footer.css">
-
-    <link rel="stylesheet" href="/css/layout.css">
-
-    <link rel="stylesheet" href="/css/comments.css">
-
-    <link rel="stylesheet" href="/css/animations.css">
+    <link rel="stylesheet" href="/static/css/animations.css">
+    <link rel="stylesheet" href="/static/css/base.css">
     <title>{{ page.title }}</title>
 </head>
 <body>
-    <input type="checkbox" id="dark-mode-checkbox" class="none">
+    <input type="checkbox" id="dark-mode-checkbox" style="display: none">
     {% include header.html %}
     <main>
         {{ content }}

@@ -2,8 +2,7 @@ left:
 
   - text: "Victor B"
     url: "/"
-    icon: "/assets/header_icons/home.svg"
-
+    
 right:
   
   - text: "Projects"

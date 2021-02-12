@@ -38,10 +38,20 @@ markdown: kramdown
 theme: minima
 plugins:
   - jekyll-feed
-  - jekyll-minifier
+  - jekyll-assets
 
 sass:
   style: compressed
+
+compress_html:
+  clippings: all
+  comments: ["<!-- ", " -->"]
+  endings: all
+  ignore:
+    envs: [local]
+  blanklines: false
+  profile: false
+  startings: [html, head, body]
 
 # Exclude from processing.
 # The following items will not be processed, by default. Create a custom list

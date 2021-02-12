@@ -1,19 +1,12 @@
----
----
-    
-/**
- * This file contains all the options for the drawer (hamburger menu) for mobile devices
- */
-
-{% assign colors = site.data.colors %}
-
 header
     background: linear-gradient(to right, var(--background-color-one), var(--background-color-two))
     font-size: 1.3em
+    font-family: sans-serif
     color: var(--foreground-color)
     a
         padding: 0.8em
         color: inherit
+        text-decoration: none
     label
         padding: 0.5em
         cursor: pointer
@@ -22,5 +15,3 @@ header
             height: 1.5em
     a:hover, label:hover
         background: var(--link-hover-background)
-    /*#dark-mode-checkbox
-        display: none*/
