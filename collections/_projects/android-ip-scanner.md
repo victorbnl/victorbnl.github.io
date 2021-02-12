@@ -5,22 +5,22 @@ title: Android IP Scanner
 
 <style>
     main {
-        --accent-color: #0352fc;
+        --accent-color: #0352fc !important;
     }
 
     header {
-        --background-color-one: #0352fc;
-        --background-color-two: #1cb7ff;
+        --background-color-one: #0352fc !important;
+        --background-color-two: #1cb7ff !important;
     }
 </style>
 
-<img src="/assets/android-ip-scanner/ic_launcher.png" align="right" width="150px">
+<img src="/static/img/android-ip-scanner/ic_launcher.png" align="right" width="150px">
 
 # [Android IP Scanner](https://github.com/victorbnl/android-ip-scanner)
 
 A bare-bone android IP scanner
 
-<a href="https://github.com/Victor-Bo/android-network-scanner/releases/latest"><img width="200px" src="/assets/icons/get-it-on-github.svg"></a>
+<a href="https://github.com/Victor-Bo/android-network-scanner/releases/latest"><img width="200px" src="/static/img/icons/get-it-on-github.svg"></a>
 
 ## Feedback
 
@@ -29,4 +29,4 @@ If you have ideas / feature requests, or any other discussions / questions, star
 
 ## Screenshots
 
-<img src="/assets/android-ip-scanner/1.png" height="500px"> <img src="/assets/android-ip-scanner/2.png" height="500px">
+<img src="/static/img/android-ip-scanner/1.png" height="500px"> <img src="/static/img/android-ip-scanner/2.png" height="500px">
