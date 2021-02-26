@@ -6,12 +6,12 @@ description: an app to get files usage on Android
 
 <style>
     main {
-        --accent-color: #5acf1f !important;
+        --accent-color: #44a115 !important;
     }
 
     header {
-        --background-color-one: #5acf1f !important;
-        --background-color-two: #44a115 !important;
+        --background-color-one: #44a115 !important;
+        --background-color-two: #66eb23 !important;
     }
 </style>
 
