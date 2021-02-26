@@ -1,6 +1,7 @@
 ---
 layout: article-with-comments
 title: Android IP Scanner
+description: a bare-bone android IP scanner
 ---
 
 <style>

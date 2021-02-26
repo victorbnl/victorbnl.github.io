@@ -1,6 +1,7 @@
 ---
 layout: article
 title: Build Signed APK
+description: build a signed APK of your Android application
 ---
 
 # Build signed APK
