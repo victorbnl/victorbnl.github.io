@@ -43,7 +43,7 @@ Start the server
 
 By default, Shibari will emulate a xbox controller, however you can make it a Dualshock 4 one. Please note that it’s not supported by most of the games. It can be useful where it’s required to have a Dualshock, for example for Playstation Now.
 
-```
+```json
 "sinks": [
     {
         /*
