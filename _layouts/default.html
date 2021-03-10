@@ -8,15 +8,19 @@ layout: compress
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/css/base.css">
     <title>{{ page.title }}</title>
 </head>
 <body>
-    <input type="checkbox" id="dark-mode-checkbox" style="display: none">
+    <input type="checkbox" id="dark-mode-checkbox" style="display: none" onclick="saveDarkModeCheckboxState()">
     {% include header.html %}
     <main>
         {{ content }}
     </main>
     {% include footer.html %}
-    <link rel="stylesheet" href="/static/css/base.css">
+    <script src="/static/js/darkModeCheckboxState.js"></script>
+    <script>
+        restoreDarkModeCheckboxState()
+    </script>
 </body>
 </html>
