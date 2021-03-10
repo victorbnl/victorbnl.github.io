@@ -57,7 +57,7 @@ By default, Shibari will emulate a xbox controller, however you can make it a Du
             "isEnabled": true,
         }
     }
-],
+]
 ```
 
 ## Sources
