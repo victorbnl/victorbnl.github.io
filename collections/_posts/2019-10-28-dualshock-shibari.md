@@ -46,26 +46,15 @@ By default, Shibari will emulate a xbox controller, however you can make it a Du
 ```json
 "sinks": [
     {
-        /*
-        * Emulates a DualShock 4 Controller
-        */
         "fullName": "Shibari.Sub.Sink.ViGEm.DS4.Core.ViGEmSinkDS4",
         "configuration": {
-        /*
-        * Disabled by default, set to true to enable
-        */
-        "isEnabled": false
+            "isEnabled": false
         }
     },
     {
-        /*
-        * Emulates an Xbox 360 Controller
-        */
         "fullName": "Shibari.Sub.Sink.ViGEm.X360.Core.ViGEmSinkX360",
         "configuration": {
-        [...]
-        "isEnabled": true,
-        [...]
+            "isEnabled": true,
         }
     }
 ],
