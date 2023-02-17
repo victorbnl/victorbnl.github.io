@@ -1,0 +1,21 @@
+body {
+    min-height: 100vh;
+    color: #333;
+}
+
+main {
+    flex-grow: 1;
+    display: grid;
+    place-items: center;
+    text-align: center;
+    padding-bottom: 6rem;
+}
+
+#avatar {
+    width: 6em;
+    border-radius: 50%;
+}
+
+#links {
+    margin-top: 1.8em;
+}

@@ -1,0 +1,36 @@
+body {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    padding: 0 2rem;
+}
+
+header {
+    display: flex;
+    border-bottom: solid 1px rgba(0, 0, 0, .1);
+
+    a {
+        padding: .8rem 1rem;
+    }
+
+    .sep {
+        flex-grow: 1;
+    }
+}
+
+a {
+    color: inherit;
+    text-decoration: inherit;
+
+    &:hover {
+        text-decoration: underline;
+    }
+}
+
+.icon {
+    height: 2em;
+    margin: 0 .5em;
+}

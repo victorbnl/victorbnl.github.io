@@ -1,0 +1,31 @@
+#project-list {
+    li {
+        margin: 2em 0;
+    }
+}
+
+.project {
+    * {
+        margin: .2em 0;
+    }
+
+    &-title {
+        font-weight: bold;
+        font-size: 1.2rem;
+    }
+}
+
+.project-banner {
+    width: 60ch;
+}
+
+.project-tags {
+    display: flex;
+    gap: 1ch;
+
+    div {
+        padding: .1em .4em;
+        border-radius: 5px;
+        background-color: rgba(0, 0, 0, .1);
+    }
+}

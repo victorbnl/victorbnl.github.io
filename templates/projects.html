@@ -1,0 +1,24 @@
+{% extends 'page.html' %}
+
+{% block style %}
+<link rel="stylesheet" href="/style.css">
+<link rel="stylesheet" href="/projects.css">
+{% endblock %}
+
+{% block content %}
+{{ page.content | safe }}
+<ul id="project-list">
+    {% for project in page.extra.projects %}
+        <li class="project">
+            <div class="project-title">{{ project.name }}</div>
+            <div>{{ project.desc }}</div>
+            <div class="project-tags">
+                {% for tag in project.tags %}
+                    <div>{{ tag }}</div>
+                {% endfor %}
+            </div>
+            <img src="/img/projects/{{ project.banner }}" alt="Banner of {{ project.name }}" class="project-banner">
+        </li>
+    {% endfor %}
+</ul>
+{% endblock content %}

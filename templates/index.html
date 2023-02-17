@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block style %}
+<link rel="stylesheet" href="/style.css">
+<link rel="stylesheet" href="/index.css">
+{% endblock style %}
+
+{% block title %}{{ section.title }}{% endblock title %}
+
+{% block content %}
+<div id="content">
+    <img src="/img/avatar.png" alt="My profile picture" id="avatar">
+    <h1>{{ section.extra.heading }}</h1>
+    <p>{{ section.extra.desc }}</p>
+    <div id="links">
+        <a href="https://github.com/victorbnl"><img src="/icons/github.svg" class="icon"></a>
+        <a href="https://buymeacoffee.com/victorbnl"><img src="/icons/buymeacoffee.svg" class="icon"></a>
+    </div>
+</div>
+{% endblock content %}
