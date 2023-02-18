@@ -1,20 +1,46 @@
-{% extends 'base.html' %}
-
-{% block style %}
-<link rel="stylesheet" href="/style.css">
-<link rel="stylesheet" href="/index.css">
-{% endblock style %}
-
-{% block title %}{{ section.title }}{% endblock title %}
-
-{% block content %}
-<div id="content">
-    <img src="/img/avatar.png" alt="My profile picture" id="avatar">
-    <h1>{{ section.extra.heading }}</h1>
-    <p>{{ section.extra.desc }}</p>
-    <div id="links">
-        <a href="https://github.com/victorbnl"><img src="/icons/github.svg" class="icon"></a>
-        <a href="https://buymeacoffee.com/victorbnl"><img src="/icons/buymeacoffee.svg" class="icon"></a>
-    </div>
-</div>
-{% endblock content %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ section.title }} | {{ config.title }}</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <header id="banner">
+        <nav>
+            <a href="#projects">Projects</a>
+        </nav>
+        <div id="banner-content">
+            <div>
+                <img src="/img/avatar.png" alt="My profile picture" id="avatar">
+                <h1>{{ section.extra.strings.heading }}</h1>
+                <p>{{ section.extra.strings.desc }}</p>
+                <div id="links">
+                    <a href="https://github.com/victorbnl"><img src="/icons/github.svg" class="icon"></a>
+                    <a href="https://buymeacoffee.com/victorbnl"><img src="/icons/buymeacoffee.svg" class="icon"></a>
+                </div>
+            </div>
+        </div>
+    </header>
+    <section id="projects">
+        <h2>{{ section.extra.strings.projects_heading }}</h2>
+        <p>Here are my projects</p>
+        <ul id="project-list">
+            {% for project in section.extra.projects %}
+                <li class="project">
+                    <div class="project-title"><a href="https://github.com/{{ project.repo }}">{{ project.name }}</a></div>
+                    <div>{{ project.desc }}</div>
+                    <div class="project-tags">
+                        {% for tag in project.tags %}
+                            <div>{{ tag }}</div>
+                        {% endfor %}
+                    </div>
+                    <img src="/img/projects/{{ project.banner }}" alt="Banner of {{ project.name }}" class="project-banner">
+                </li>
+            {% endfor %}
+        </ul>
+    </section>
+</body>
+</html>
