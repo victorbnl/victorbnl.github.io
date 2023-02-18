@@ -7,7 +7,10 @@ language_link = { name = "English", link = "/" }
 [extra.strings]
 heading = "Victor BONNELLE"
 desc = "Salut! Je suis un développeur."
-projects_heading = "Mes projets"
+projects_title = "Mes projets"
+contact_title = "Me contacter"
+contact_desc = "Une question ? Une idée de projet ? Une proposition de collaboration ? Une suggestion ? N'hésitez pas à m'envoyer un message"
+contact_me = "Contactez-moi"
 
 [[extra.projects]]
 name = "Notepad#"

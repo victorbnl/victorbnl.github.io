@@ -10,7 +10,7 @@
 <body>
     <header id="banner">
         <nav>
-            <a href="#projects">{{ section.extra.strings.projects_heading }}</a>
+            <a href="#projects">{{ section.extra.strings.projects_title }}</a>
             <a href="{{ section.extra.language_link.link }}">{{ section.extra.language_link.name }}</a>
         </nav>
         <div id="banner-content">
@@ -25,8 +25,8 @@
             </div>
         </div>
     </header>
-    <section id="projects">
-        <h2>{{ section.extra.strings.projects_heading }}</h2>
+    <section id="projects" class="section">
+        <h2>{{ section.extra.strings.projects_title }}</h2>
         <ul id="project-list">
             {% for project in section.extra.projects %}
                 <li class="project">
@@ -42,5 +42,12 @@
             {% endfor %}
         </ul>
     </section>
+    <footer class="section">
+        <div>
+            <h2>{{ section.extra.strings.contact_title }}</h2>
+            <p>{{ section.extra.strings.contact_desc }}</p>
+        </div>
+        <a href="mailto:victor.bonnelle@proton.me" class="button">{{ section.extra.strings.contact_me }}</a>
+    </footer>
 </body>
 </html>

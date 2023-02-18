@@ -49,8 +49,10 @@ body {
     }
 }
 
-section {
+.section {
     padding: 2rem 3rem;
+    border-top: solid 1px #eee;
+    border-bottom: solid 1px #eee;
 
     > h2,
     > p {
@@ -90,12 +92,24 @@ section {
     }
 }
 
+footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
 a {
     color: inherit;
     text-decoration: inherit;
 
     &:hover {
         text-decoration: underline;
+    }
+
+    &.button {
+        padding: .5em .8em;
+        border-radius: 10px;
+        border: solid 2px black;
     }
 }
 
