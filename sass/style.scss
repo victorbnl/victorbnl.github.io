@@ -1,4 +1,5 @@
 @import 'reset';
+@import 'colors';
 
 @import 'components/header';
 @import 'components/projects';
@@ -14,13 +15,14 @@ html {
 
 body {
     margin: 0;
-    color: #333;
+    background-color: var(--background);
+    color: var(--foreground);
 }
 
 .section {
     padding: 2rem 3rem;
-    border-top: solid 1px #eee;
-    border-bottom: solid 1px #eee;
+    border-top: solid 1px var(--borders);
+    border-bottom: solid 1px var(--borders);
 
     > h2,
     > p {
@@ -36,11 +38,17 @@ a {
     &.button {
         padding: .5em .8em;
         border-radius: 10px;
-        border: solid 2px black;
+        border: solid 2px var(--foreground);
     }
 }
 
 .icon {
     height: 2em;
     margin: 0 .5em;
+}
+
+@media (prefers-color-scheme: dark) {
+    .icon {
+        filter: invert(1);
+    }
 }
