@@ -40,6 +40,12 @@ a {
         border-radius: 10px;
         border: solid 2px var(--foreground);
         white-space: nowrap;
+
+        &:hover {
+            background-color: var(--foreground);
+            color: var(--background);
+            text-decoration: inherit;
+        }
     }
 }
 
