@@ -6,3 +6,6 @@ build_search_index = false
 
 [markdown]
 highlight_code = false
+
+[languages.fr]
+title = "Victor"

@@ -10,7 +10,8 @@
 <body>
     <header id="banner">
         <nav>
-            <a href="#projects">Projects</a>
+            <a href="#projects">{{ section.extra.strings.projects_heading }}</a>
+            <a href="{{ section.extra.language_link.link }}">{{ section.extra.language_link.name }}</a>
         </nav>
         <div id="banner-content">
             <div>
@@ -26,7 +27,6 @@
     </header>
     <section id="projects">
         <h2>{{ section.extra.strings.projects_heading }}</h2>
-        <p>Here are my projects</p>
         <ul id="project-list">
             {% for project in section.extra.projects %}
                 <li class="project">
