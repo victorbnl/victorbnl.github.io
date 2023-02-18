@@ -2,7 +2,7 @@
 title = "Accueil"
 
 [extra]
-language_link = { name = "English", link = "/" }
+language_link = { name = "EN", link = "/" }
 
 [extra.strings]
 heading = "Victor BONNELLE"
