@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ page.title }}{% endblock %}
+
+{% block content %}
+<main>
+    <article>
+        <h1>{{ page.title }}</h1>
+        <p class="infos">Victor Bonnelle • {{ page.date | date(format="%d %B %Y") }}</p>
+        {{ page.content | safe }}
+    </article>
+</main>
+{% endblock %}

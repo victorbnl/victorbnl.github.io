@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ section.title }}{% endblock %}
+
+{% block content %}
+<main>
+    <article>
+        {{ section.content | safe }}
+        <ul>
+            {% for page in section.pages %}
+                <li><a href="{{ page.path }}">{{ page.title }}</a></li>
+            {% endfor %}
+        </ul>
+    </article>
+</main>
+{% endblock %}

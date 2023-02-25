@@ -1,53 +1,48 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ section.title }} | {{ config.title }}</title>
-    <link rel="stylesheet" href="/style.css">
-</head>
-<body>
-    <header id="banner">
-        <nav>
-            <a href="#projects">{{ section.extra.strings.projects_title }}</a>
-            <a href="{{ section.extra.language_link.link }}">{{ section.extra.language_link.name }}</a>
-        </nav>
-        <div id="banner-content">
-            <div>
-                <img src="/img/avatar.png" alt="My profile picture" id="avatar">
-                <h1>{{ section.extra.strings.heading }}</h1>
-                <p>{{ section.extra.strings.desc }}</p>
-                <div id="links">
-                    <a href="https://github.com/victorbnl"><img src="/icons/github.svg" class="icon"></a>
-                    <a href="https://ko-fi.com/victorbnl"><img src="/icons/kofi.svg" class="icon"></a>
+{% extends 'base.html' %}
+
+{% block style %}
+<link rel="stylesheet" href="/index.css">
+{% endblock %}
+
+{% block title %}{{ section.title }}{% endblock %}
+
+{% block header %}
+<div id="banner-content">
+    <div>
+        <img src="/img/avatar.png" alt="My profile picture" id="avatar">
+        <h1>{{ section.extra.strings.heading }}</h1>
+        <p>{{ section.extra.strings.desc }}</p>
+        <div id="links">
+            <a href="https://github.com/victorbnl"><img src="/icons/github.svg" class="icon"></a>
+            <a href="https://ko-fi.com/victorbnl"><img src="/icons/kofi.svg" class="icon"></a>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<section id="projects" class="section">
+    <h2>{{ section.extra.strings.projects_title }}</h2>
+    <ul id="project-list">
+        {% for project in section.extra.projects %}
+            <li class="project">
+                <div class="project-title"><a href="https://github.com/{{ project.repo }}">{{ project.name }}</a></div>
+                <div>{{ project.desc }}</div>
+                <div class="project-tags">
+                    {% for tag in project.tags %}
+                        <div>{{ tag }}</div>
+                    {% endfor %}
                 </div>
-            </div>
-        </div>
-    </header>
-    <section id="projects" class="section">
-        <h2>{{ section.extra.strings.projects_title }}</h2>
-        <ul id="project-list">
-            {% for project in section.extra.projects %}
-                <li class="project">
-                    <div class="project-title"><a href="https://github.com/{{ project.repo }}">{{ project.name }}</a></div>
-                    <div>{{ project.desc }}</div>
-                    <div class="project-tags">
-                        {% for tag in project.tags %}
-                            <div>{{ tag }}</div>
-                        {% endfor %}
-                    </div>
-                    <img src="/img/projects/{{ project.banner }}" alt="Banner of {{ project.name }}" class="project-banner">
-                </li>
-            {% endfor %}
-        </ul>
-    </section>
-    <footer class="section">
-        <div>
-            <h2>{{ section.extra.strings.contact_title }}</h2>
-            <p>{{ section.extra.strings.contact_desc }}</p>
-        </div>
-        <a href="mailto:victor.bonnelle@proton.me" class="button">{{ section.extra.strings.contact_me }}</a>
-    </footer>
-</body>
-</html>
+                <img src="/img/projects/{{ project.banner }}" alt="Banner of {{ project.name }}" class="project-banner">
+            </li>
+        {% endfor %}
+    </ul>
+</section>
+<footer class="section">
+    <div>
+        <h2>{{ section.extra.strings.contact_title }}</h2>
+        <p>{{ section.extra.strings.contact_desc }}</p>
+    </div>
+    <a href="mailto:victor.bonnelle@proton.me" class="button">{{ section.extra.strings.contact_me }}</a>
+</footer>
+{% endblock %}

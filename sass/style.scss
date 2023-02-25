@@ -2,10 +2,6 @@
 @import 'colors';
 @import 'fonts';
 
-@import 'components/header';
-@import 'components/projects';
-@import 'components/footer';
-
 * {
     box-sizing: border-box;
 }
@@ -19,30 +15,59 @@ body {
     background-color: var(--background);
     color: var(--foreground);
     font-family: "Noto Serif", serif;
-    font-size: 1.1rem;
 }
 
-h1 {
-    font-family: 'IBM Plex Mono', serif;
+header {
+    nav {
+        display: flex;
+        justify-content: space-between;
+        padding: 0 .8rem;
+
+        section {
+            display: flex;
+        }
+
+        a {
+            color: inherit;
+            padding: .8rem 1rem;
+        }
+    }
 }
 
-.section {
-    padding: 2rem 3rem;
-    border-top: solid 1px var(--borders);
-    border-bottom: solid 1px var(--borders);
+main {
+    display: flex;
+    justify-content: center;
 
-    > h2,
-    > p {
-        text-align: center;
+    article {
+        flex-grow: 1;
+        padding: 2rem 3rem;
+        width: 100%;
+        max-width: 80ch;
+
+        .infos {
+            color: gray;
+        }
+
+        p {
+            text-align: justify;
+        }
+
+        img {
+            display: block;
+            margin: auto;
+        }
     }
 }
 
 a {
+    color: rgb(77, 75, 227);
+
     &:hover {
         text-decoration: underline;
     }
 
     &.button {
+        color: inherit;
         padding: .5em .8em;
         border-radius: 10px;
         border: solid 2px var(--foreground);
@@ -69,4 +94,26 @@ a {
 
 img {
     max-width: 100%;
+}
+
+table {
+    border-collapse: collapse;
+
+    th, td {
+        border: solid 1px gray;
+        padding: .5em .8em;
+    }
+}
+
+p > code {
+    background-color: #2b2c2f;
+    color: white;
+    border-radius: 5px;
+    padding: .1em .3em;
+}
+
+pre {
+    overflow-x: scroll;
+    padding: 1em 1.2em;
+    border-radius: 5px;
 }
