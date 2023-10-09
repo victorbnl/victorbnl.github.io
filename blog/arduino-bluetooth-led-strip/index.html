@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/style.css">
+    
+    <title>Control a LED strip over Bluetooth with an Arduino</title>
+</head>
+<body>
+    <header>
+        <nav>
+            <section>
+                <a href="/">Home</a>
+            </section>
+            <section>
+                <a href="/#projects">Projects</a>
+                <a href="/blog">Blog</a>
+            </section>
+        </nav>
+        
+    </header>
+    
+<main>
+    <article>
+        <h1>Control a LED strip over Bluetooth with an Arduino</h1>
+        <p class="infos">Victor Bonnelle • 25 February 2023</p>
+        <blockquote>
+<p><em>This is a rework of a tutorial I had published back then in July 2019.</em></p>
+</blockquote>
+<p>Recently, I have been given a LED strip so I thought it could be convenient to
+make it possible to control it from my phone over Bluetooth. In this tutorial,
+I'll explain the process of doing so with an Arduino.</p>
+<h2 id="requirements">Requirements</h2>
+<ul>
+<li>A LED strip to control</li>
+<li>An Arduino card with at least three PWM pins (the one with the ~)</li>
+<li>A bluetooth module (HC-05 or HC-06)</li>
+<li>A power supply (e.g. the one that comes with the LED strip)</li>
+</ul>
+<h2 id="i-control-the-light-strip">I. Control the light strip</h2>
+<h3 id="step-1-setup-the-power-source">Step 1. Setup the power source</h3>
+<p>For starters, connect the + of the power supply and its ground to the
+breadboard (if the power supply doesn't have a ground, use the RGB pins). Then
+connect the power and the ground to the VIN and the GND pins of the Arduino.</p>
+<p><img src="/img/blog/arduino_bluetooth_led_strip/power.png" alt="" /></p>
+<h3 id="step-2-get-transistors">Step 2. Get transistors</h3>
+<p>Of course we don't want all the colors to be on all the time, as it would only
+allow shades of gray. We want to be able to control them individually as
+follows:</p>
+<p><img src="/img/blog/arduino_bluetooth_led_strip/colors_control.png" alt="" /></p>
+<p>For sure, one could use switches, but here we want software control. Here comes
+the transistor! Two possiblities here: you can use either three transistors, or
+a transistor array. As I didn't have three of them, I used the array. If you
+don't have one either, there is often one on this component:</p>
+<p><img src="/img/blog/arduino_bluetooth_led_strip/transistor_array.png" alt="" /></p>
+<p>It's the black block which reads &quot;ULN2003&quot;. You can remove it gently using your
+nails and a flathead screwdriver.</p>
+<h3 id="step-3-use-the-transistors-to-turn-on-the-colors">Step 3. Use the transistors to turn on the colors</h3>
+<p>Here is how a transistor array works:</p>
+<p><img src="/img/blog/arduino_bluetooth_led_strip/transistor_array_explaination.png" alt="" /></p>
+<p>Thus, you need to connect the power source and the ground, and then each color
+to a transistor and the corresponding control pin to a PWM pin of the Arduino.</p>
+<p><img src="/img/blog/arduino_bluetooth_led_strip/transistor_array_explaination.png" alt="" /></p>
+<h3 id="step-4-start-to-code">Step 4. Start to code</h3>
+<p>Open your Arduino IDE, create a new file and first define your pins:</p>
+<pre data-lang="cpp" style="background-color:#2b2c2f;color:#cccece;" class="language-cpp "><code class="language-cpp" data-lang="cpp"><span style="color:#c594c5;">#define </span><span>REDPIN </span><span style="color:#f99157;">5
+</span><span style="color:#c594c5;">#define </span><span>GREENPIN </span><span style="color:#f99157;">6
+</span><span style="color:#c594c5;">#define </span><span>BLUEPIN </span><span style="color:#f99157;">3
+</span></code></pre>
+<p>Set them up as outputs:</p>
+<pre data-lang="cpp" style="background-color:#2b2c2f;color:#cccece;" class="language-cpp "><code class="language-cpp" data-lang="cpp"><span style="color:#c594c5;">void </span><span style="color:#6699cc;">setup</span><span style="color:#5fb3b3;">()
+</span><span style="color:#5fb3b3;">{
+</span><span>    </span><span style="color:#6699cc;">pinMode</span><span style="color:#5fb3b3;">(</span><span style="color:#6699cc;">REDPIN</span><span style="color:#5fb3b3;">,</span><span style="color:#6699cc;"> output</span><span style="color:#5fb3b3;">);
+</span><span>    </span><span style="color:#6699cc;">pinMode</span><span style="color:#5fb3b3;">(</span><span style="color:#6699cc;">GREENPIN</span><span style="color:#5fb3b3;">,</span><span style="color:#6699cc;"> output</span><span style="color:#5fb3b3;">);
+</span><span>    </span><span style="color:#6699cc;">pinMode</span><span style="color:#5fb3b3;">(</span><span style="color:#6699cc;">BLUEPIN</span><span style="color:#5fb3b3;">,</span><span style="color:#6699cc;"> output</span><span style="color:#5fb3b3;">);
+</span><span style="color:#5fb3b3;">}
+</span></code></pre>
+<p>Try turning on the strip as red</p>
+<pre data-lang="cpp" style="background-color:#2b2c2f;color:#cccece;" class="language-cpp "><code class="language-cpp" data-lang="cpp"><span style="color:#c594c5;">void </span><span style="color:#6699cc;">loop</span><span style="color:#5fb3b3;">()
+</span><span style="color:#5fb3b3;">{
+</span><span>    </span><span style="color:#6699cc;">digitalWrite</span><span style="color:#5fb3b3;">(</span><span style="color:#6699cc;">REDPIN</span><span style="color:#5fb3b3;">,</span><span style="color:#6699cc;"> HIGH</span><span style="color:#5fb3b3;">);
+</span><span style="color:#5fb3b3;">}
+</span></code></pre>
+<h2 id="ii-bluetooth-communication">II. Bluetooth communication</h2>
+<h3 id="step-1-get-a-bluetooth-terminal">Step 1. Get a bluetooth terminal</h3>
+<p>In order to communicate with the bluetooth module, you'll need an application.
+If you're using Android, check out
+<a href="https://play.google.com/store/apps/details?id=de.kai_morich.serial_bluetooth_terminal">this app</a>.</p>
+<h3 id="step-2-connect-the-bluetooth-module-to-the-arduino">Step 2. Connect the Bluetooth module to the Arduino</h3>
+<p>Make your connections as follows:</p>
+<table><thead><tr><th>HC-05</th><th>Arduino</th></tr></thead><tbody>
+<tr><td>EN</td><td>N/A</td></tr>
+<tr><td>VCC</td><td>5V</td></tr>
+<tr><td>GND</td><td>GND</td></tr>
+<tr><td>TXD</td><td>Any pin (I use 4)</td></tr>
+<tr><td>RXD</td><td>Any pin (I use 2)</td></tr>
+<tr><td>STATE</td><td>N/A</td></tr>
+</tbody></table>
+<p><img src="/img/blog/arduino_bluetooth_led_strip/bluetooth_connections.png" alt="" /></p>
+<p>Note we don't care about the EN and STATE pins.</p>
+<h3 id="step-3-code">Step 3. Code</h3>
+<p>Bluetooth communication requires the use of the Software Serial library, import
+it:</p>
+<pre data-lang="cpp" style="background-color:#2b2c2f;color:#cccece;" class="language-cpp "><code class="language-cpp" data-lang="cpp"><span style="color:#c594c5;">#include </span><span style="color:#5fb3b3;">&lt;</span><span style="color:#99c794;">SoftwareSerial.h</span><span style="color:#5fb3b3;">&gt;
+</span></code></pre>
+<p>Define your TXD and RXD pins:</p>
+<pre data-lang="cpp" style="background-color:#2b2c2f;color:#cccece;" class="language-cpp "><code class="language-cpp" data-lang="cpp"><span style="color:#c594c5;">#define </span><span>BTTXPIN </span><span style="color:#f99157;">4
+</span><span style="color:#c594c5;">#define </span><span>BTRXPIN </span><span style="color:#f99157;">2
+</span></code></pre>
+<p>Get a serial object and initialise serial communication:</p>
+<pre data-lang="cpp" style="background-color:#2b2c2f;color:#cccece;" class="language-cpp "><code class="language-cpp" data-lang="cpp"><span>SoftwareSerial </span><span style="color:#6699cc;">HC05</span><span style="color:#5fb3b3;">(</span><span style="color:#f99157;">BTTXPIN</span><span style="color:#5fb3b3;">, </span><span style="color:#f99157;">BTRXPIN</span><span style="color:#5fb3b3;">);
+</span><span style="color:#c594c5;">void </span><span style="color:#6699cc;">setup</span><span style="color:#5fb3b3;">()
+</span><span style="color:#5fb3b3;">{
+</span><span>    HC05</span><span style="color:#5fb3b3;">.</span><span style="color:#6699cc;">begin</span><span style="color:#5fb3b3;">(</span><span style="color:#f99157;">9600</span><span style="color:#5fb3b3;">);
+</span><span style="color:#5fb3b3;">}
+</span></code></pre>
+<h3 id="step-4-commands">Step 4. Commands</h3>
+<p>For testing the communication, try this to just reply with the command that has
+been sent:</p>
+<pre data-lang="cpp" style="background-color:#2b2c2f;color:#cccece;" class="language-cpp "><code class="language-cpp" data-lang="cpp"><span>String cmd </span><span style="color:#5fb3b3;">= &quot;&quot;;
+</span><span style="color:#c594c5;">char</span><span> c</span><span style="color:#5fb3b3;">;
+</span><span>
+</span><span style="color:#5f6364;">// Any unread messages?
+</span><span style="color:#c594c5;">while </span><span style="color:#5fb3b3;">(</span><span>HC05</span><span style="color:#5fb3b3;">.</span><span style="color:#6699cc;">available</span><span style="color:#5fb3b3;">())
+</span><span style="color:#5fb3b3;">{
+</span><span>    </span><span style="color:#5f6364;">// We mustn&#39;t go faster than the Bluetooth module!
+</span><span>    </span><span style="color:#6699cc;">delay</span><span style="color:#5fb3b3;">(</span><span style="color:#f99157;">1</span><span style="color:#5fb3b3;">);
+</span><span>    </span><span style="color:#5f6364;">// Read the message character by character
+</span><span>    c </span><span style="color:#5fb3b3;">=</span><span> HC05</span><span style="color:#5fb3b3;">.</span><span style="color:#6699cc;">read</span><span style="color:#5fb3b3;">();
+</span><span>    cmd </span><span style="color:#5fb3b3;">+=</span><span> c</span><span style="color:#5fb3b3;">;
+</span><span style="color:#5fb3b3;">}
+</span><span>
+</span><span style="color:#5f6364;">// Print the message in the Bluetooth Serial
+</span><span style="color:#5f6364;">// (it will be displayed on your phone)
+</span><span>HC05</span><span style="color:#5fb3b3;">.</span><span style="color:#6699cc;">println</span><span style="color:#5fb3b3;">(</span><span>cmd</span><span style="color:#5fb3b3;">);
+</span></code></pre>
+<p>Now try to turn the red color on when recieving the &quot;R&quot; command</p>
+<pre data-lang="cpp" style="background-color:#2b2c2f;color:#cccece;" class="language-cpp "><code class="language-cpp" data-lang="cpp"><span style="color:#c594c5;">if </span><span style="color:#5fb3b3;">(</span><span>cmd </span><span style="color:#5fb3b3;">== &quot;</span><span style="color:#99c794;">B</span><span style="color:#5fb3b3;">&quot;)
+</span><span style="color:#5fb3b3;">{
+</span><span>    </span><span style="color:#6699cc;">digitalWrite</span><span style="color:#5fb3b3;">(</span><span style="color:#6699cc;">BLUEPIN</span><span style="color:#5fb3b3;">,</span><span style="color:#6699cc;"> HIGH</span><span style="color:#5fb3b3;">);
+</span><span style="color:#5fb3b3;">} </span><span style="color:#c594c5;">else if </span><span style="color:#5fb3b3;">(</span><span>cmd </span><span style="color:#5fb3b3;">== &quot;</span><span style="color:#99c794;">b</span><span style="color:#5fb3b3;">&quot;)
+</span><span style="color:#5fb3b3;">{
+</span><span>    </span><span style="color:#6699cc;">digitalWrite</span><span style="color:#5fb3b3;">(</span><span style="color:#6699cc;">BLUEPIN</span><span style="color:#5fb3b3;">,</span><span style="color:#6699cc;"> LOW</span><span style="color:#5fb3b3;">);
+</span><span style="color:#5fb3b3;">}
+</span></code></pre>
+<h2 id="iii-intensity">III. Intensity</h2>
+<p>PWM are special pins on Arduino that can blink very quickly so that you can
+control the LEDs intensity.</p>
+<h3 id="step-1-set-the-frequency">Step 1. Set the frequency</h3>
+<p>Grab the function which sets the PWM frequency of a pin, which I honestly
+copy-paste from the website:</p>
+<pre data-lang="cpp" style="background-color:#2b2c2f;color:#cccece;" class="language-cpp "><code class="language-cpp" data-lang="cpp"><span style="color:#5f6364;">/*
+</span><span style="color:#5f6364;"> * http://www.arduino.cc/cgi-bin/yabb2/YaBB.pl?num=1235060559/0#4
+</span><span style="color:#5f6364;"> */
+</span><span style="color:#c594c5;">void </span><span style="color:#6699cc;">setPwmFrequency</span><span style="color:#5fb3b3;">(</span><span style="color:#c594c5;">int </span><span style="color:#f99157;">pin</span><span style="color:#5fb3b3;">, </span><span style="color:#c594c5;">int </span><span style="color:#f99157;">divisor</span><span style="color:#5fb3b3;">) {
+</span><span>   byte mode</span><span style="color:#5fb3b3;">;
+</span><span>   </span><span style="color:#c594c5;">if</span><span style="color:#5fb3b3;">(</span><span>pin </span><span style="color:#5fb3b3;">== </span><span style="color:#f99157;">5 </span><span style="color:#5fb3b3;">||</span><span> pin </span><span style="color:#5fb3b3;">== </span><span style="color:#f99157;">6 </span><span style="color:#5fb3b3;">||</span><span> pin </span><span style="color:#5fb3b3;">== </span><span style="color:#f99157;">9 </span><span style="color:#5fb3b3;">||</span><span> pin </span><span style="color:#5fb3b3;">== </span><span style="color:#f99157;">10</span><span style="color:#5fb3b3;">) {
+</span><span>      </span><span style="color:#c594c5;">switch</span><span style="color:#5fb3b3;">(</span><span>divisor</span><span style="color:#5fb3b3;">) {
+</span><span>         </span><span style="color:#c594c5;">case </span><span style="color:#f99157;">1</span><span style="color:#5fb3b3;">:</span><span> mode </span><span style="color:#5fb3b3;">= 0x</span><span style="color:#f99157;">01</span><span style="color:#5fb3b3;">; </span><span style="color:#c594c5;">break</span><span style="color:#5fb3b3;">;
+</span><span>         </span><span style="color:#c594c5;">case </span><span style="color:#f99157;">8</span><span style="color:#5fb3b3;">:</span><span> mode </span><span style="color:#5fb3b3;">= 0x</span><span style="color:#f99157;">02</span><span style="color:#5fb3b3;">; </span><span style="color:#c594c5;">break</span><span style="color:#5fb3b3;">;
+</span><span>         </span><span style="color:#c594c5;">case </span><span style="color:#f99157;">64</span><span style="color:#5fb3b3;">:</span><span> mode </span><span style="color:#5fb3b3;">= 0x</span><span style="color:#f99157;">03</span><span style="color:#5fb3b3;">; </span><span style="color:#c594c5;">break</span><span style="color:#5fb3b3;">;
+</span><span>         </span><span style="color:#c594c5;">case </span><span style="color:#f99157;">256</span><span style="color:#5fb3b3;">:</span><span> mode </span><span style="color:#5fb3b3;">= 0x</span><span style="color:#f99157;">04</span><span style="color:#5fb3b3;">; </span><span style="color:#c594c5;">break</span><span style="color:#5fb3b3;">;
+</span><span>         </span><span style="color:#c594c5;">case </span><span style="color:#f99157;">1024</span><span style="color:#5fb3b3;">:</span><span> mode </span><span style="color:#5fb3b3;">= 0x</span><span style="color:#f99157;">05</span><span style="color:#5fb3b3;">; </span><span style="color:#c594c5;">break</span><span style="color:#5fb3b3;">;
+</span><span>         </span><span style="color:#c594c5;">default</span><span style="color:#5fb3b3;">: </span><span style="color:#c594c5;">return</span><span style="color:#5fb3b3;">;
+</span><span>      </span><span style="color:#5fb3b3;">}
+</span><span>      </span><span style="color:#c594c5;">if</span><span style="color:#5fb3b3;">(</span><span>pin </span><span style="color:#5fb3b3;">== </span><span style="color:#f99157;">5 </span><span style="color:#5fb3b3;">||</span><span> pin </span><span style="color:#5fb3b3;">== </span><span style="color:#f99157;">6</span><span style="color:#5fb3b3;">) {
+</span><span>         TCCR0B </span><span style="color:#5fb3b3;">=</span><span> TCCR0B </span><span style="color:#5fb3b3;">&amp; 0b</span><span style="color:#f99157;">11111000 </span><span style="color:#5fb3b3;">|</span><span> mode</span><span style="color:#5fb3b3;">;
+</span><span>      </span><span style="color:#5fb3b3;">} </span><span style="color:#c594c5;">else </span><span style="color:#5fb3b3;">{
+</span><span>         TCCR1B </span><span style="color:#5fb3b3;">=</span><span> TCCR1B </span><span style="color:#5fb3b3;">&amp; 0b</span><span style="color:#f99157;">11111000 </span><span style="color:#5fb3b3;">|</span><span> mode</span><span style="color:#5fb3b3;">;
+</span><span>      </span><span style="color:#5fb3b3;">}
+</span><span>   </span><span style="color:#5fb3b3;">} </span><span style="color:#c594c5;">else if</span><span style="color:#5fb3b3;">(</span><span>pin </span><span style="color:#5fb3b3;">== </span><span style="color:#f99157;">3 </span><span style="color:#5fb3b3;">||</span><span> pin </span><span style="color:#5fb3b3;">== </span><span style="color:#f99157;">11</span><span style="color:#5fb3b3;">) {
+</span><span>      </span><span style="color:#c594c5;">switch</span><span style="color:#5fb3b3;">(</span><span>divisor</span><span style="color:#5fb3b3;">) {
+</span><span>         </span><span style="color:#c594c5;">case </span><span style="color:#f99157;">1</span><span style="color:#5fb3b3;">:</span><span> mode </span><span style="color:#5fb3b3;">= 0x</span><span style="color:#f99157;">01</span><span style="color:#5fb3b3;">; </span><span style="color:#c594c5;">break</span><span style="color:#5fb3b3;">;
+</span><span>         </span><span style="color:#c594c5;">case </span><span style="color:#f99157;">8</span><span style="color:#5fb3b3;">:</span><span> mode </span><span style="color:#5fb3b3;">= 0x</span><span style="color:#f99157;">02</span><span style="color:#5fb3b3;">; </span><span style="color:#c594c5;">break</span><span style="color:#5fb3b3;">;
+</span><span>         </span><span style="color:#c594c5;">case </span><span style="color:#f99157;">32</span><span style="color:#5fb3b3;">:</span><span> mode </span><span style="color:#5fb3b3;">= 0x</span><span style="color:#f99157;">03</span><span style="color:#5fb3b3;">; </span><span style="color:#c594c5;">break</span><span style="color:#5fb3b3;">;
+</span><span>         </span><span style="color:#c594c5;">case </span><span style="color:#f99157;">64</span><span style="color:#5fb3b3;">:</span><span> mode </span><span style="color:#5fb3b3;">= 0x</span><span style="color:#f99157;">04</span><span style="color:#5fb3b3;">; </span><span style="color:#c594c5;">break</span><span style="color:#5fb3b3;">;
+</span><span>         </span><span style="color:#c594c5;">case </span><span style="color:#f99157;">128</span><span style="color:#5fb3b3;">:</span><span> mode </span><span style="color:#5fb3b3;">= 0x</span><span style="color:#f99157;">05</span><span style="color:#5fb3b3;">; </span><span style="color:#c594c5;">break</span><span style="color:#5fb3b3;">;
+</span><span>         </span><span style="color:#c594c5;">case </span><span style="color:#f99157;">256</span><span style="color:#5fb3b3;">:</span><span> mode </span><span style="color:#5fb3b3;">= 0x</span><span style="color:#f99157;">06</span><span style="color:#5fb3b3;">; </span><span style="color:#c594c5;">break</span><span style="color:#5fb3b3;">;
+</span><span>         </span><span style="color:#c594c5;">case </span><span style="color:#f99157;">1024</span><span style="color:#5fb3b3;">:</span><span> mode </span><span style="color:#5fb3b3;">= 0x</span><span style="color:#f99157;">7</span><span style="color:#5fb3b3;">; </span><span style="color:#c594c5;">break</span><span style="color:#5fb3b3;">;
+</span><span>         </span><span style="color:#c594c5;">default</span><span style="color:#5fb3b3;">: </span><span style="color:#c594c5;">return</span><span style="color:#5fb3b3;">;
+</span><span>      </span><span style="color:#5fb3b3;">}
+</span><span>      TCCR2B </span><span style="color:#5fb3b3;">=</span><span> TCCR2B </span><span style="color:#5fb3b3;">&amp; 0b</span><span style="color:#f99157;">11111000 </span><span style="color:#5fb3b3;">|</span><span> mode</span><span style="color:#5fb3b3;">;
+</span><span>   </span><span style="color:#5fb3b3;">}
+</span><span style="color:#5fb3b3;">}
+</span></code></pre>
+<p>Then set a default frequency at start:</p>
+<pre data-lang="cpp" style="background-color:#2b2c2f;color:#cccece;" class="language-cpp "><code class="language-cpp" data-lang="cpp"><span style="color:#c594c5;">void </span><span style="color:#6699cc;">setup</span><span style="color:#5fb3b3;">()
+</span><span style="color:#5fb3b3;">{
+</span><span>    </span><span style="color:#6699cc;">setPwmFrequency</span><span style="color:#5fb3b3;">(</span><span style="color:#6699cc;">REDPIN</span><span style="color:#5fb3b3;">, </span><span style="color:#f99157;">1</span><span style="color:#5fb3b3;">);
+</span><span>    </span><span style="color:#6699cc;">setPwmFrequency</span><span style="color:#5fb3b3;">(</span><span style="color:#6699cc;">GREENPIN</span><span style="color:#5fb3b3;">, </span><span style="color:#f99157;">1</span><span style="color:#5fb3b3;">);
+</span><span>    </span><span style="color:#6699cc;">setPwmFrequency</span><span style="color:#5fb3b3;">(</span><span style="color:#6699cc;">BLUEPIN</span><span style="color:#5fb3b3;">, </span><span style="color:#f99157;">1</span><span style="color:#5fb3b3;">);
+</span><span style="color:#5fb3b3;">}
+</span></code></pre>
+<p>You can now set a frequency for each pin between the following values: 1, 8, 32,
+64, 128, 256, 1024. Just take the lowest value with which it works (using 1 can
+cause issues with bluetooth).</p>
+<h3 id="step-2-turn-on-a-color-with-a-frequency">Step 2. Turn on a color with a frequency</h3>
+<p>If you want to turn on a color with a specific frequency, use the function
+<code>analogWrite(pin, intensity)</code> where <code>pin</code> is the pin and <code>intensity</code> a frequency
+between 0 and 255 (the highest the brightest).</p>
+<p>Try to make a specific color, e.g.</p>
+<pre data-lang="cpp" style="background-color:#2b2c2f;color:#cccece;" class="language-cpp "><code class="language-cpp" data-lang="cpp"><span style="color:#c594c5;">void </span><span style="color:#6699cc;">loop</span><span style="color:#5fb3b3;">()
+</span><span style="color:#5fb3b3;">{
+</span><span>    </span><span style="color:#6699cc;">analogWrite</span><span style="color:#5fb3b3;">(</span><span style="color:#6699cc;">BLUEPIN</span><span style="color:#5fb3b3;">, </span><span style="color:#f99157;">30</span><span style="color:#5fb3b3;">);
+</span><span>    </span><span style="color:#6699cc;">analogWrite</span><span style="color:#5fb3b3;">(</span><span style="color:#6699cc;">REDPIN</span><span style="color:#5fb3b3;">, </span><span style="color:#f99157;">255</span><span style="color:#5fb3b3;">);
+</span><span>    </span><span style="color:#6699cc;">analogWrite</span><span style="color:#5fb3b3;">(</span><span style="color:#6699cc;">GREENPIN</span><span style="color:#5fb3b3;">, </span><span style="color:#f99157;">0</span><span style="color:#5fb3b3;">);
+</span><span style="color:#5fb3b3;">}
+</span></code></pre>
+<h3 id="step-3-make-it-variables">Step 3. Make it variables</h3>
+<pre data-lang="cpp" style="background-color:#2b2c2f;color:#cccece;" class="language-cpp "><code class="language-cpp" data-lang="cpp"><span style="color:#c594c5;">int</span><span> red </span><span style="color:#5fb3b3;">= </span><span style="color:#f99157;">0</span><span style="color:#5fb3b3;">;
+</span><span style="color:#c594c5;">int</span><span> green </span><span style="color:#5fb3b3;">= </span><span style="color:#f99157;">0</span><span style="color:#5fb3b3;">;
+</span><span style="color:#c594c5;">int</span><span> blue </span><span style="color:#5fb3b3;">= </span><span style="color:#f99157;">0</span><span style="color:#5fb3b3;">;
+</span><span>
+</span><span style="color:#c594c5;">void </span><span style="color:#6699cc;">updateColors</span><span style="color:#5fb3b3;">()
+</span><span style="color:#5fb3b3;">{
+</span><span>    </span><span style="color:#6699cc;">analogWrite</span><span style="color:#5fb3b3;">(</span><span style="color:#6699cc;">REDPIN</span><span style="color:#5fb3b3;">,</span><span style="color:#6699cc;"> red</span><span style="color:#5fb3b3;">);
+</span><span>    </span><span style="color:#6699cc;">analogWrite</span><span style="color:#5fb3b3;">(</span><span style="color:#6699cc;">GREENPIN</span><span style="color:#5fb3b3;">,</span><span style="color:#6699cc;"> green</span><span style="color:#5fb3b3;">);
+</span><span>    </span><span style="color:#6699cc;">analogWrite</span><span style="color:#5fb3b3;">(</span><span style="color:#6699cc;">BLUEPIN</span><span style="color:#5fb3b3;">,</span><span style="color:#6699cc;"> blue</span><span style="color:#5fb3b3;">);
+</span><span style="color:#5fb3b3;">}
+</span><span>
+</span><span style="color:#c594c5;">void </span><span style="color:#6699cc;">loop</span><span style="color:#5fb3b3;">()
+</span><span style="color:#5fb3b3;">{
+</span><span>    </span><span style="color:#6699cc;">updateColors</span><span style="color:#5fb3b3;">();
+</span><span style="color:#5fb3b3;">}
+</span></code></pre>
+<p>Now you can just set the red, green and blue variables before the
+<code>updateColors();</code> in the loop to switch colors.</p>
+<h3 id="step-4-parsing-commands">Step 4. Parsing commands</h3>
+<p>We now want to be able to set colors by sending color values: <code>255,255,255</code>. The
+parsing process consists of reading the string until a <code>,</code> is found, assigning
+the found value to red, and repeat the process for green and blue.</p>
+<pre data-lang="cpp" style="background-color:#2b2c2f;color:#cccece;" class="language-cpp "><code class="language-cpp" data-lang="cpp"><span style="color:#c594c5;">void </span><span style="color:#6699cc;">loop</span><span style="color:#5fb3b3;">()
+</span><span style="color:#5fb3b3;">{
+</span><span>    </span><span style="color:#c594c5;">bool</span><span> hcAvail </span><span style="color:#5fb3b3;">=</span><span> HC05</span><span style="color:#5fb3b3;">.</span><span style="color:#6699cc;">available</span><span style="color:#5fb3b3;">();
+</span><span>    </span><span style="color:#c594c5;">if </span><span style="color:#5fb3b3;">(</span><span>hcAvail</span><span style="color:#5fb3b3;">)
+</span><span>    </span><span style="color:#5fb3b3;">{
+</span><span>        </span><span style="color:#c594c5;">char </span><span style="color:#5fb3b3;">*</span><span>token</span><span style="color:#5fb3b3;">;
+</span><span>        </span><span style="color:#c594c5;">char</span><span> value</span><span style="color:#5fb3b3;">[</span><span style="color:#f99157;">3</span><span style="color:#5fb3b3;">];
+</span><span>        String strval</span><span style="color:#5fb3b3;">;
+</span><span>
+</span><span>        token </span><span style="color:#5fb3b3;">= </span><span style="color:#6699cc;">strtok</span><span style="color:#5fb3b3;">(</span><span style="color:#6699cc;">input</span><span style="color:#5fb3b3;">, &quot;</span><span style="color:#99c794;">,</span><span style="color:#5fb3b3;">&quot;);
+</span><span>        </span><span style="color:#c594c5;">for </span><span style="color:#5fb3b3;">(</span><span style="color:#c594c5;">int</span><span> i </span><span style="color:#5fb3b3;">= </span><span style="color:#f99157;">0</span><span style="color:#5fb3b3;">;</span><span> i </span><span style="color:#5fb3b3;">&lt; </span><span style="color:#f99157;">3</span><span style="color:#5fb3b3;">;</span><span> i</span><span style="color:#5fb3b3;">++) {
+</span><span>        value</span><span style="color:#5fb3b3;">[</span><span>i</span><span style="color:#5fb3b3;">] =</span><span> token</span><span style="color:#5fb3b3;">[</span><span>i</span><span style="color:#5fb3b3;">];
+</span><span>        </span><span style="color:#5fb3b3;">}
+</span><span>        strval </span><span style="color:#5fb3b3;">=</span><span> value</span><span style="color:#5fb3b3;">;
+</span><span>        red </span><span style="color:#5fb3b3;">=</span><span> strval</span><span style="color:#5fb3b3;">.</span><span style="color:#6699cc;">toInt</span><span style="color:#5fb3b3;">();
+</span><span>
+</span><span>        token </span><span style="color:#5fb3b3;">= </span><span style="color:#6699cc;">strtok</span><span style="color:#5fb3b3;">(</span><span style="color:#f99157;">NULL</span><span style="color:#5fb3b3;">, &quot;</span><span style="color:#99c794;">,</span><span style="color:#5fb3b3;">&quot;);
+</span><span>        </span><span style="color:#c594c5;">for </span><span style="color:#5fb3b3;">(</span><span style="color:#c594c5;">int</span><span> i </span><span style="color:#5fb3b3;">= </span><span style="color:#f99157;">0</span><span style="color:#5fb3b3;">;</span><span> i </span><span style="color:#5fb3b3;">&lt; </span><span style="color:#f99157;">3</span><span style="color:#5fb3b3;">;</span><span> i</span><span style="color:#5fb3b3;">++) {
+</span><span>        value</span><span style="color:#5fb3b3;">[</span><span>i</span><span style="color:#5fb3b3;">] =</span><span> token</span><span style="color:#5fb3b3;">[</span><span>i</span><span style="color:#5fb3b3;">];
+</span><span>        </span><span style="color:#5fb3b3;">}
+</span><span>        strval </span><span style="color:#5fb3b3;">=</span><span> value</span><span style="color:#5fb3b3;">;
+</span><span>        green </span><span style="color:#5fb3b3;">=</span><span> strval</span><span style="color:#5fb3b3;">.</span><span style="color:#6699cc;">toInt</span><span style="color:#5fb3b3;">();
+</span><span>
+</span><span>        token </span><span style="color:#5fb3b3;">= </span><span style="color:#6699cc;">strtok</span><span style="color:#5fb3b3;">(</span><span style="color:#f99157;">NULL</span><span style="color:#5fb3b3;">, &quot;</span><span style="color:#99c794;">,</span><span style="color:#5fb3b3;">&quot;);
+</span><span>        </span><span style="color:#c594c5;">for </span><span style="color:#5fb3b3;">(</span><span style="color:#c594c5;">int</span><span> i </span><span style="color:#5fb3b3;">= </span><span style="color:#f99157;">0</span><span style="color:#5fb3b3;">;</span><span> i </span><span style="color:#5fb3b3;">&lt; </span><span style="color:#f99157;">3</span><span style="color:#5fb3b3;">;</span><span> i</span><span style="color:#5fb3b3;">++) {
+</span><span>        value</span><span style="color:#5fb3b3;">[</span><span>i</span><span style="color:#5fb3b3;">] =</span><span> token</span><span style="color:#5fb3b3;">[</span><span>i</span><span style="color:#5fb3b3;">];
+</span><span>        </span><span style="color:#5fb3b3;">}
+</span><span>        strval </span><span style="color:#5fb3b3;">=</span><span> value</span><span style="color:#5fb3b3;">;
+</span><span>        blue </span><span style="color:#5fb3b3;">=</span><span> strval</span><span style="color:#5fb3b3;">.</span><span style="color:#6699cc;">toInt</span><span style="color:#5fb3b3;">();
+</span><span>
+</span><span>        </span><span style="color:#c594c5;">while </span><span style="color:#5fb3b3;">(</span><span>HC05</span><span style="color:#5fb3b3;">.</span><span style="color:#6699cc;">available</span><span style="color:#5fb3b3;">())
+</span><span>        </span><span style="color:#5fb3b3;">{
+</span><span>            hcAvail </span><span style="color:#5fb3b3;">=</span><span> HC05</span><span style="color:#5fb3b3;">.</span><span style="color:#6699cc;">available</span><span style="color:#5fb3b3;">();
+</span><span>            </span><span style="color:#6699cc;">delay</span><span style="color:#5fb3b3;">(</span><span style="color:#f99157;">1</span><span style="color:#5fb3b3;">);
+</span><span>            c </span><span style="color:#5fb3b3;">=</span><span> HC05</span><span style="color:#5fb3b3;">.</span><span style="color:#6699cc;">read</span><span style="color:#5fb3b3;">();
+</span><span>            cmd </span><span style="color:#5fb3b3;">+=</span><span> c</span><span style="color:#5fb3b3;">;
+</span><span>        </span><span style="color:#5fb3b3;">}
+</span><span>    </span><span style="color:#5fb3b3;">}
+</span><span style="color:#5fb3b3;">}
+</span></code></pre>
+<h2 id="final-word">Final word</h2>
+<p>Thank you for reading my tutorial. If you need help with it, do not hesitate
+sending me a message at
+<a href="mailto:victor.bonnelle@proton.me">victor.bonnelle@proton.me</a></p>
+
+    </article>
+</main>
+
+</body>
+</html>
