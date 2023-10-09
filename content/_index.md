@@ -6,7 +6,7 @@ language_link = { name = "FR", link = "/fr" }
 
 [extra.strings]
 heading = "Victor Bonnelle"
-desc = "Hello there! I'm a freelance software developer."
+desc = "Hello there! I'm a software developer."
 projects_title = "My projects"
 contact_title = "Get in touch"
 contact_desc = "A question? A project idea? Want to collaborate? A suggestion? Feel free to send me a message!"
